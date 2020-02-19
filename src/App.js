@@ -4,6 +4,7 @@ const path = require("path")
 var ejs = require('ejs'); 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
+const log = console.log
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(cookieParser())
 
 
 app.get("/", function(req, res) {
+    
     res.render("index");
 });
 
@@ -34,6 +36,8 @@ app.get("/a", function(req, res) {
 app.post("/a/response", function(req, res, next) {
     const body = req.body
 
+    log('path', req.path)
+
     console.log('body', body)
     console.log('cookies', req.cookies)
 
@@ -44,7 +48,7 @@ app.post("/a/response", function(req, res, next) {
     // Max-Age
     // res.append('Set-Cookie', `cookiekey=cookievalue; Path=/; HttpOnly; Max-Age=30;`)
     // Path
-    res.append('Set-Cookie', `cookiekeya=cookievalue-a; Path=/a; HttpOnly;`)
+    res.append('Set-Cookie', `cookiekey-a=cookievalue-a; Path=/a; HttpOnly;`)
     res.sendStatus(200);
 })
 
@@ -52,10 +56,11 @@ app.post("/a/response", function(req, res, next) {
 app.post("/response", function(req, res, next) {
     const body = req.body
 
+    log('path', req.path)
+
     console.log('body', body)
     console.log('cookies', req.cookies)
-
-    res.append('Set-Cookie', `cookiekeyindex=cookievalue-index; Path=/; HttpOnly;`)
+    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; Path=/; HttpOnly;`)
     res.sendStatus(200);
 })
 
