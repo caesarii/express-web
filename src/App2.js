@@ -8,6 +8,14 @@ const log = console.log
 
 const app = express();
 
+app.all('*', function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', '*');
+    res.header('Access-Control-Allow-Methods', '*');
+    res.append('Set-Cookie', `cookiekey-img=cookievalue-img2;`)
+    next();
+});
+
 // 以下四项是模板引擎的配置
 app.engine('html', ejs.__express)
 app.set('view engine', 'html')
@@ -33,27 +41,6 @@ app.get("/a", function(req, res) {
 });
 
 
-
-app.post("/a/response", function(req, res, next) {
-    const body = req.body
-
-    log('path', req.path)
-
-    console.log('body', body)
-    console.log('cookies', req.cookies)
-
-    // 注意header/属性大小写, 注意 toUTCString 是必需的
-    // 属性的写法参考 浏览器 application
-    // Expires
-    // res.append('Set-Cookie', `cookiekey=cookievalue; Path=/; HttpOnly; Expires=${new Date('Wed Feb 19 2020 11:51:30').toUTCString()};`)
-    // Max-Age
-    // res.append('Set-Cookie', `cookiekey=cookievalue; Path=/; HttpOnly; Max-Age=30;`)
-    // Path
-    res.append('Set-Cookie', `cookiekey-a=cookievalue-a; Path=/a; HttpOnly;`)
-    res.sendStatus(200);
-})
-
-
 app.post("/response", function(req, res, next) {
     const body = req.body
 
@@ -63,10 +50,23 @@ app.post("/response", function(req, res, next) {
     console.log('cookies', req.cookies)
     // 必须是当前域名或父域名
     // 设置了 secure 不能在 http 下保存 cookie
-    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; SameSite=None`)
+    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; Path=/; SameSite=None;`)
     res.sendStatus(200);
 })
 
-app.listen(3000, '10.10.14.173', function () {
+app.post("/copy/response", function(req, res, next) {
+    const body = req.body
+
+    log('path', req.path)
+
+    console.log('body', body)
+    console.log('cookies', req.cookies)
+    // 必须是当前域名或父域名
+    // 设置了 secure 不能在 http 下保存 cookie
+    res.append('Set-Cookie', `cookiekey-app2=cookievalue-app2; Path=/;`)
+    res.sendStatus(200);
+})
+
+app.listen(8000, 'localhost', function () {
     console.log('listen on localhost:3000...')
 });
