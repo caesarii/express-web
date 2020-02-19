@@ -1,10 +1,19 @@
-
+const https = require('https')
+const http = require('http')
 const express = require("express");
 const path = require("path")
+const fs = require("fs")
 var ejs = require('ejs'); 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 const log = console.log
+
+var options = {
+    key: fs.readFileSync(path.resolve(__dirname, './server.key')),
+    cert: fs.readFileSync(path.resolve(__dirname, './server.crt')),
+    requestCert: false,
+    rejectUnauthorized: false
+};
 
 const app = express();
 
@@ -12,7 +21,7 @@ app.all('*', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
     res.header('Access-Control-Allow-Methods', '*');
-    res.append('Set-Cookie', `cookiekey-img=cookievalue-img2;`)
+    res.append('Set-Cookie', `cookiekey-img=cookievalue-img2; SameSite=None; Secure`)
     next();
 });
 
@@ -42,6 +51,7 @@ app.get("/a", function(req, res) {
 
 
 app.post("/response", function(req, res, next) {
+    log('/reponse')
     const body = req.body
 
     log('path', req.path)
@@ -67,6 +77,17 @@ app.post("/copy/response", function(req, res, next) {
     res.sendStatus(200);
 })
 
-app.listen(8000, 'localhost', function () {
-    console.log('listen on localhost:3000...')
+
+var httpsServer = https.createServer( options, app );
+var httpServer = http.createServer(app)
+
+// const host = 'localhost'
+const host = '10.10.14.173'
+httpsServer.listen(4000, host, function () {
+    console.log( 'httpS on 4000' );
+} );
+
+
+httpServer.listen(8000, host, function () {
+    console.log('http on 8000...')
 });

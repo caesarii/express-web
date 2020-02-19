@@ -1,10 +1,21 @@
 
+const https = require('https')
+const http = require('http')
 const express = require("express");
 const path = require("path")
+const fs = require("fs")
 var ejs = require('ejs'); 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser')
 const log = console.log
+
+var options = {
+    key: fs.readFileSync(path.resolve(__dirname, './server.key')),
+    cert: fs.readFileSync(path.resolve(__dirname, './server.crt')),
+    requestCert: false,
+    rejectUnauthorized: false
+};
+
 
 const app = express();
 
@@ -63,10 +74,20 @@ app.post("/response", function(req, res, next) {
     console.log('cookies', req.cookies)
     // 必须是当前域名或父域名
     // 设置了 secure 不能在 http 下保存 cookie
-    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; SameSite=None`)
+    res.append('Set-Cookie', `cookiekey-index=cookievalue-index;`)
     res.sendStatus(200);
 })
 
-app.listen(3000, '10.10.14.173', function () {
-    console.log('listen on localhost:3000...')
+var httpServer = http.createServer(app)
+var httpsServer = https.createServer( options, app );
+
+
+const host = 'localhost'
+httpServer.listen(3000, host, function () {
+    console.log( 'http on 3000' );
+} );
+
+
+httpsServer.listen(3400, host, function () {
+    console.log('httpS on 6000...')
 });
