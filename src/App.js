@@ -60,10 +60,10 @@ app.post("/response", function(req, res, next) {
 
     console.log('body', body)
     console.log('cookies', req.cookies)
-    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; Path=/; HttpOnly;`)
+    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; Path=/; HttpOnly; domain=10.10.14.173;`)
     res.sendStatus(200);
 })
 
-app.listen(3000, 'localhost', function () {
+app.listen(3000, '10.10.14.173', function () {
     console.log('listen on localhost:3000...')
 });
