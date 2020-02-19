@@ -1,0 +1,21 @@
+{
+  "name": "number-game",
+  "version": "1.0.0",
+  "main": "App.js",
+  "scripts": {
+    "start": "node ./src/App.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caesarii/Flappy-Bird.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/caesarii/Flappy-Bird/issues"
+  },
+  "homepage": "https://github.com/caesarii/Flappy-Bird#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+  }
+}
