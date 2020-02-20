@@ -1,21 +1,24 @@
 {
-  "name": "number-game",
+  "name": "express-web",
   "version": "1.0.0",
-  "main": "App.js",
+  "description": "该分支主要用于探索 HTTP",
+  "main": "./src/server/app.js",
   "scripts": {
-    "start": "node ./src/App.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/server/app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/caesarii/Flappy-Bird.git"
+    "url": "git+https://github.com/caesarii/express-web.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/caesarii/Flappy-Bird/issues"
+    "url": "https://github.com/caesarii/express-web/issues"
   },
-  "homepage": "https://github.com/caesarii/Flappy-Bird#readme",
+  "homepage": "https://github.com/caesarii/express-web#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
   }
 }

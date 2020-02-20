@@ -1,3 +1,2 @@
-# express-web
+该分支主要用于探索 HTTP 
 
-这是一个基于 express 的 web 项目
