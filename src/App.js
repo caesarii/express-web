@@ -60,7 +60,7 @@ app.post("/a/response", function(req, res, next) {
     // Max-Age
     // res.append('Set-Cookie', `cookiekey=cookievalue; Path=/; HttpOnly; Max-Age=30;`)
     // Path
-    res.append('Set-Cookie', `cookiekey-a=cookievalue-a; Path=/a; HttpOnly;`)
+    res.append('Set-Cookie', `cookiekey-a=cookievalue-a; Path=/; HttpOnly;`)
     res.sendStatus(200);
 })
 
@@ -74,7 +74,7 @@ app.post("/response", function(req, res, next) {
     console.log('cookies', req.cookies)
     // 必须是当前域名或父域名
     // 设置了 secure 不能在 http 下保存 cookie
-    res.append('Set-Cookie', `cookiekey-index=cookievalue-index;`)
+    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; SameSite=Strict; Secure`)
     res.sendStatus(200);
 })
 
