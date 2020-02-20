@@ -39,7 +39,7 @@ class Request {
     }
     
     init() {
-        // log('raw', this.raw)
+        log('Request raw \n', this.raw, '\n')
         // 解析原始请求信息
         const raw = this.raw
         const raws = raw.split(' ')

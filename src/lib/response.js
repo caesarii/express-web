@@ -1,43 +1,60 @@
 const fs = require('fs')
 const {log} = require('./utils')
 
+const fileTypes = {
+    js: 'text/javascript',
+    gif: 'image/gif'
+}
+
 class Response {
     constructor(staticPath) {
-        log('Response', staticPath)
         this.staticPath = staticPath
     }
-
-
     
-    template(file) {
+    _template(file) {
         const options = {
             encoding: 'utf8'
         }
         const path = `${this.staticPath}/${file}`
-        log('path', path)
         const content = fs.readFileSync(path, options)
         return content
     }
     
     render(file, data) {
-        log('rnder', file, data)
         const header = 'HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n'
-        let body = this.template(file)
+        let body = this._template(file)
         for(let key in data) {
             body = body.replace(`{{${key}}}`, data[key])
         }
         const r = header + '\r\n' + body
+
+        log('Response render row \n', r, '\n')
         return r
     }
     
     static(filename) {
         const path = `${this.staticPath}/${filename}`
+        const fileType = filename.split('.').pop()
+        log('file type', fileType)
         const body = fs.readFileSync(path)
-        // TODO 图片类型
-        const header = 'HTTP/1.1 200 OK\r\nContent-Type: image/gif\r\n\r\n'
+        // Cache-Control: no-cache
+        const header = `HTTP/1.1 200 OK\r\nContent-Type: ${fileTypes[fileType]}\r\nCache-Control: no-cache\r\n\r\n`
+        log('Response static raw', header, body, '\n')
+
         const h = Buffer.from(header)
         const r = Buffer.concat([h, body])
+
         return r
+    }
+
+    sendStatus(status) {
+        const header = `HTTP/1.1 200 OK\r\n\r\n`
+        log('Response sendStatus raw', header, '\n')
+
+        const r = Buffer.from(header)
+
+        return r
+
     }
 }
 

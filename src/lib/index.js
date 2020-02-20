@@ -7,7 +7,7 @@ const {log, error, } = require('./utils')
 class NodeNet {
     constructor() {
         this.routeMapper = {}
-        this.staticPath = 'S'
+        this.staticPath = ''
     }
 
     static(staticPath) {
