@@ -74,7 +74,7 @@ app.post("/response", function(req, res, next) {
     console.log('cookies', req.cookies)
     // 必须是当前域名或父域名
     // 设置了 secure 不能在 http 下保存 cookie
-    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; SameSite=Strict; Secure`)
+    res.append('Set-Cookie', `cookiekey-index=cookievalue-index; SameSite=Strict; Secure; Domain=localhost`)
     res.sendStatus(200);
 })
 
