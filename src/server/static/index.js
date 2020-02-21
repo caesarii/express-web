@@ -7,8 +7,7 @@ const __main = () => {
         btn.addEventListener('click', function(e) {
             console.log('hello world')
             fetch('/example', {
-                method: 'POST',
-                body: JSON.stringify({ example: 'example data'})
+                method: 'GET',
             })
         })
 }

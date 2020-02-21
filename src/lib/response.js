@@ -37,8 +37,9 @@ class Response {
         const fileType = filename.split('.').pop()
         log('file type', fileType)
         const body = fs.readFileSync(path)
-        // Cache-Control: no-cache
-        const header = `HTTP/1.1 200 OK\r\nContent-Type: ${fileTypes[fileType]}\r\nCache-Control: no-cache\r\n\r\n`
+        // Cache-Control: no-cache 不缓存
+        // Cache-Control: max-age=1000 缓存 1000s
+        const header = `HTTP/1.1 200 OK\r\nContent-Type:${fileTypes[fileType]}\r\nCache-Control:max-age=1000\r\n\r\n`
         log('Response static raw', header, body, '\n')
 
         const h = Buffer.from(header)
@@ -48,7 +49,7 @@ class Response {
     }
 
     sendStatus(status) {
-        const header = `HTTP/1.1 200 OK\r\n\r\n`
+        const header = `HTTP/1.1 200 OK\r\nCache-Control:max-age=1000\r\n\r\n`
         log('Response sendStatus raw', header, '\n')
 
         const r = Buffer.from(header)
