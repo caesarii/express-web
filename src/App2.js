@@ -18,6 +18,7 @@ var options = {
 const app = express();
 
 app.all('*', function (req, res, next) {
+    log('all', req.method)
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
     res.header('Access-Control-Allow-Methods', '*');
@@ -65,6 +66,19 @@ app.post("/response", function(req, res, next) {
 })
 
 app.post("/copy/response", function(req, res, next) {
+    const body = req.body
+
+    log('path', req.path)
+
+    console.log('body', body)
+    console.log('cookies', req.cookies)
+    // 必须是当前域名或父域名
+    // 设置了 secure 不能在 http 下保存 cookie
+    res.append('Set-Cookie', `cookiekey-app2=cookievalue-app2; Path=/;`)
+    res.sendStatus(200);
+})
+
+app.put("/copy/response", function(req, res, next) {
     const body = req.body
 
     log('path', req.path)

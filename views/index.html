@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>cookie</title>
+        <title>CORS</title>
         <style media="screen">
 
         </style>
@@ -11,15 +11,21 @@
     <body>
     <Button class="btn">请求</Button>
     <a href="https://10.10.14.173:4000">百度一下</a>
-    <img src="https://10.10.14.173:4000/app2.png" alt="">
+    <img src="http://10.10.14.173:8000/app2.png" alt="">
     <script src="main.js"></script>
     <script>
         const __main = function() {
         const e = document.querySelector.bind(document)
         const btn = e('.btn')
         btn.addEventListener('click', function () {
-            post('/response')
-            post('https://10.10.14.173:4000/copy/response')
+            // post('https://10.10.14.173:4000/copy/response')
+            // 跨域请求
+            fetch('http://10.10.14.173:8000/copy/response', {
+                method: 'PUT',
+                body: JSON.stringify({
+                    example: 'some text'
+                })
+            })
             console.log('click btn') 
         })
     }
