@@ -3,8 +3,6 @@ const express = require("express");
 const path = require("path")
 var ejs = require('ejs'); 
 var bodyParser = require('body-parser');
-var xlsx = require('node-xlsx');
-var fs = require('fs');
 
 const app = express();
 app.engine('html', ejs.__express);
